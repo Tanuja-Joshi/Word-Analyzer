@@ -3,42 +3,54 @@ import PropTypes from 'prop-types'
 
 export default function TextForm(props) {
     const [text,setText]=useState('')
-    const handleUpClick=()=>{
-    const newText= text.toUpperCase();
-    setText(newText)
-}
-const handleOnChange=(event)=>
+    const handleOnChange=(event)=>
 {
     setText(event.target.value)
 }
+    const handleUpClick=()=>{
+    const newText= text.toUpperCase();
+    setText(newText)
+    props.showAlert(' Converted to upper case','success') //you can do the same for other handlers
+}
+
 const handleLowClick=()=>{
     const newText= text.toLowerCase();
     setText(newText)
+    props.showAlert(' Converted to lower case','success')
 }
 const handleClear=()=>{
     const newText=" "
     setText(newText)
+    props.showAlert(' Text cleared','success')
 }
 const handleSentenceCase=()=>{
-const newText=text.charAt(0).toUpperCase().concat(text.slice(1,text.length))
+    let newText=text.toLowerCase();
+newText=newText.charAt(0).toUpperCase().concat(text.slice(1,text.length))
     setText(newText)
+    props.showAlert(' Converted to Sentence case','success')
 }
 const handleCapitalizedCase=()=>{
-        const newText=text.replace(/\b\w/g, (char) => char.toUpperCase())
+        let newText=text.toLowerCase();
+        newText=newText.replace(/\b\w/g, (char) => char.toUpperCase())
         setText(newText)
+        props.showAlert(' Converted to Capitalized case','success')
     }
     const handleInverseCase=()=>{
-        const newText=text.replace(/\w\b/g, (char) => char.toUpperCase())
+        let newText=text.toLowerCase();
+         newText=newText.replace(/\w\b/g, (char) => char.toUpperCase())
             setText(newText)
+            props.showAlert(' Converted to Inverse case','success')
         }
     const handleCopy=()=>{
       var newText=document.getElementById("myBox")  
       newText.select()
       navigator.clipboard.writeText(newText.value)  
+      props.showAlert(' Copied to clipboard','success')
     }
     const handleExtraSpace=()=>{
         let newText=text.split(/[ ]+/)
         setText(newText.join(" "))
+        props.showAlert(' Removed extra spaces','success')
     }
   return (
     <>
@@ -65,8 +77,9 @@ const handleCapitalizedCase=()=>{
         <h1>Your text Summary</h1>
         <p>{text.split(" ").length} words and {text.length} characters</p>
         <p>You can read this paragraph in {0.008*text.split(" ").length} minutes</p>
-        <h2>Preview</h2>
-        {text.length>0?text:'enter some text obove to preview'}
+        <h2>Preview </h2>
+        {text.length>0?text:'enter anything in the textbox above to preview'}
+       
     </div>
     </>
   )
